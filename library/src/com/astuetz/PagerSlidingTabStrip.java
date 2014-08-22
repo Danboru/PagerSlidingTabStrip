@@ -48,6 +48,10 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	public interface IconTabProvider {
 		public int getPageIconResId(int position);
 	}
+	
+	public interface ViewTabProvider {
+        	public View getPageTabView(int position);
+    	}
 
 	// @formatter:off
 	private static final int[] ATTRS = new int[] {
@@ -194,11 +198,13 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 		for (int i = 0; i < tabCount; i++) {
 
-			if (pager.getAdapter() instanceof IconTabProvider) {
-				addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
-			} else {
-				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
-			}
+	            if (pager.getAdapter() instanceof ViewTabProvider) {
+	                addViewTab(i, (((ViewTabProvider) pager.getAdapter()).getPageTabView(i)));
+	            } else if (pager.getAdapter() instanceof IconTabProvider) {
+	                addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+	            } else {
+	                addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+	            }
 
 		}
 
@@ -224,6 +230,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	}
 
+    	private void addViewTab(final int position, View view) {
+        	addTab(position, view);
+    	}
 	private void addTextTab(final int position, String title) {
 
 		TextView tab = new TextView(getContext());
