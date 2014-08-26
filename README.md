@@ -1,5 +1,10 @@
 # Android PagerSlidingTabStrip
 
+----
+## Change I made:
+ability to change tab layout with custom View (any view)
+
+----
 Interactive paging indicator widget, compatible with the `ViewPager` from the 
 Android Support Library. 
 
